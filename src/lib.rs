@@ -186,7 +186,6 @@ impl Script {
         // TODO: Parse CompactSize prefix, then read that many bytes
         // Return error if not enough bytes
         let (length, length_bytes) = CompactSize::from_bytes(bytes)?;
-
         let script_length = length.value as usize;
         let total_length = length_bytes + script_length;
 
@@ -283,7 +282,6 @@ impl BitcoinTransaction {
         // - CompactSize (number of inputs)
         // - each input serialized
         // - lock_time (4 bytes LE)
-
         let mut serialized = Vec::new();
         serialized.extend_from_slice(&self.version.to_le_bytes());
         serialized.extend_from_slice(&CompactSize::new(self.inputs.len() as u64).to_bytes());
