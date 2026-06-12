@@ -333,11 +333,7 @@ impl fmt::Display for BitcoinTransaction {
 
         for (i, input) in self.inputs.iter().enumerate() {
             writeln!(f, "Input {}:", i)?;
-            writeln!(
-                f,
-                "  Previous Output Vout: {}",
-                input.previous_output.vout
-            )?;
+            writeln!(f, "  Previous Output Vout: {}", input.previous_output.vout)?;
             writeln!(
                 f,
                 "  ScriptSig: {} bytes: {}",
