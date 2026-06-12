@@ -335,8 +335,7 @@ impl fmt::Display for BitcoinTransaction {
             writeln!(f, "Input {}:", i)?;
             writeln!(
                 f,
-                "  Previous Output: {}:{}",
-                hex::encode(input.previous_output.txid.0),
+                "  Previous Output Vout: {}",
                 input.previous_output.vout
             )?;
             writeln!(
