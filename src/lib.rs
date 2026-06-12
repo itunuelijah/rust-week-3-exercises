@@ -84,7 +84,6 @@ impl CompactSize {
                 ]);
                 Ok((CompactSize { value }, 9))
             }
-            _ => Err(BitcoinError::InvalidFormat),
         }
     }
 }
@@ -302,8 +301,9 @@ impl BitcoinTransaction {
         let version = u32::from_le_bytes([bytes[0], bytes[1], bytes[2], bytes[3]]);
         let (count, input_count_bytes) = CompactSize::from_bytes(&bytes[4..])?;
         let mut inputs = Vec::with_capacity(count as usize);
+        let input_count = count.value as usize;
         let mut cursor = 4 + input_count_bytes;
-        for _ in 0..count {
+        for _ in 0..input_count {
             let (input, input_bytes) = TransactionInput::from_bytes(&bytes[cursor..])?;
             inputs.push(input);
             cursor += input_bytes;
@@ -344,6 +344,7 @@ impl fmt::Display for BitcoinTransaction {
                 hex::encode(&input.script_sig.bytes)
             )?;
             writeln!(f, "  Sequence: {}", input.sequence)?;
+            Ok(())
         }
     }
 }
